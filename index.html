@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodSoft Certificate Verification</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 80px;
+      margin-bottom: 50px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-svg {
+      width: 45px;
+      height: 45px;
+      margin-right: 12px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-title {
+      font-size: 24px;
+      font-weight: 500;
+      color: #1a1e43;
+      line-height: 1.1;
+    }
+
+    .logo-subtitle {
+      font-size: 11px;
+      color: #df5861;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+    }
+
+    .nav-links a:hover {
+      color: #5D87B8;
+    }
+
+    .nav-links a.active {
+      color: #5D87B8;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .system-title {
+      font-size: 18px;
+      font-weight: 400;
+      color: #333;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Search Container */
+    .search-container {
+      background-color: #f7f8fb;
+      border: 1px solid #e1e5f2;
+      border-radius: 8px;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
+    }
+
+    .search-form {
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 15px 20px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-right: none;
+      border-radius: 4px 0 0 4px;
+      outline: none;
+      color: #333;
+    }
+
+    .search-input::placeholder {
+      color: #888;
+    }
+
+    .search-btn {
+      padding: 0 40px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .search-btn:hover {
+      background-color: #222;
+    }
+
+    /* Result Container */
+    .result-container {
+      display: none; /* Hidden initially */
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.4s ease-in-out;
+      margin-bottom: 60px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-title {
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .result-table td {
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #333;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    .result-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .result-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .result-table tr:nth-child(odd) {
+      background-color: #ffffff;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    footer a {
+      color: #5D87B8;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Error Message */
+    .error-message {
+      color: #d32f2f;
+      margin-top: -30px;
+      margin-bottom: 30px;
+      text-align: center;
+      display: none;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <svg class="logo-svg" viewBox="0 0 100 100">
+        <!-- Circular abstract pattern matching CodSoft logo vaguely -->
+        <circle cx="50" cy="50" r="35" fill="none" stroke="#252d6a" stroke-width="8" stroke-dasharray="15 10"/>
+        <circle cx="50" cy="50" r="22" fill="none" stroke="#e04e5e" stroke-width="8" stroke-dasharray="25 15"/>
+        <circle cx="50" cy="50" r="8" fill="#252d6a"/>
+      </svg>
+      <div class="logo-text">
+        <div class="logo-title">CodSoft</div>
+        <div class="logo-subtitle">Code.Create.Succeed</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#">Services</a>
+      <a href="#">Internship</a>
+      <a href="#">Jobs</a>
+      <a href="#" class="active">Verification</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="system-title">CERTIFICATE VERIFICATION SYSTEM</div>
+    
+    <div class="search-container">
+      <div class="search-form">
+        <input type="text" id="certInput" class="search-input" placeholder="Enter Certificate Code">
+        <button id="searchBtn" class="search-btn">Search</button>
+      </div>
+    </div>
+
+    <div id="errorMsg" class="error-message">Certificate code not found.</div>
+
+    <div class="result-container" id="resultContainer">
+      <h2 class="result-title">Certificate Result</h2>
+      <table class="result-table">
+        <tbody>
+          <tr>
+            <td>Student Name: <span id="resName"></span></td>
+          </tr>
+          <tr>
+            <td>Domain: <span id="resDomain"></span></td>
+          </tr>
+          <tr>
+            <td>Duration: <span id="resDuration"></span></td>
+          </tr>
+          <tr>
+            <td>Certification No: <span id="resCertNo"></span></td>
+          </tr>
+          <tr>
+            <td>Starting Date: <span id="resStart"></span></td>
+          </tr>
+          <tr>
+            <td>Award Date: <span id="resAward"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2026 &bull; Built with <a href="#">CodSoft</a>
+  </footer>
+
+  <script>
+    // Intern database
+    const interns = {
+      "0ajp781": { name: "Jayesh Rajendra Deore", start: "10/Apr/2026", award: "10/May/2026" },
+      "udsfh78": { name: "Ganesh Prakash Halor", start: "15/Apr/2026", award: "15/May/2026" },
+      "98yg192": { name: "Gaurav Dnyaneshwar Patil", start: "05/Apr/2026", award: "05/May/2026" },
+      "u90yt75": { name: "Soham Shekhar Jagtap", start: "02/Apr/2026", award: "02/May/2026" },
+      "mn78yt0": { name: "Sagar Vijay Bhoi", start: "10/Apr/2026", award: "10/May/2026" },
+      "jh54u8i": { name: "Kalyani Sunil Pagare", start: "20/Apr/2026", award: "20/May/2026" },
+      "ar65ioh": { name: "Akshay Bhavsingh Rajput", start: "28/Apr/2026", award: "28/May/2026" },
+      "io69syj": { name: "Sanket Pravin Deore", start: "18/Apr/2026", award: "18/May/2026" }
+    };
+
+    const domain = "Web Development Internship";
+    const duration = "4 weeks";
+
+    const searchBtn = document.getElementById("searchBtn");
+    const certInput = document.getElementById("certInput");
+    const resultContainer = document.getElementById("resultContainer");
+    const errorMsg = document.getElementById("errorMsg");
+
+    const resName = document.getElementById("resName");
+    const resDomain = document.getElementById("resDomain");
+    const resDuration = document.getElementById("resDuration");
+    const resCertNo = document.getElementById("resCertNo");
+    const resStart = document.getElementById("resStart");
+    const resAward = document.getElementById("resAward");
+
+    searchBtn.addEventListener("click", () => {
+      const query = certInput.value.trim();
+      
+      if (!query) return;
+
+      const intern = interns[query];
+
+      if (intern) {
+        // Hide error if shown
+        errorMsg.style.display = "none";
+        
+        // Populate data
+        resName.textContent = intern.name;
+        resDomain.textContent = domain;
+        resDuration.textContent = duration;
+        resCertNo.textContent = query;
+        resStart.textContent = intern.start;
+        resAward.textContent = intern.award;
+
+        // Show result
+        resultContainer.style.display = "flex";
+      } else {
+        // Show error and hide result
+        resultContainer.style.display = "none";
+        errorMsg.style.display = "block";
+      }
+    });
+
+    // Handle enter key
+    certInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchBtn.click();
+      }
+    });
+  </script>
+
+</body>
+</html>
