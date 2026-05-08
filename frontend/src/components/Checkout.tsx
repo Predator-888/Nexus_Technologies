@@ -52,7 +52,7 @@ export default function Checkout({ amount, userData, onSuccess }: Props) {
         key: "rzp_test_SmAYQV3IW8eLzK", // Hardcoded safely as it is a public test key, but usually from env
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "CodSoft",
+        name: "Nexus Technologies",
         description: "Internship Registration Fee",
         order_id: orderData.orderId,
         handler: async function (response: any) {

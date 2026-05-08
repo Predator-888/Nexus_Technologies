@@ -61,7 +61,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.6 }}
           className="text-lg md:text-xl text-gray-400 max-w-2xl mb-10"
         >
-          Join CodSoft's elite internship program. Get real-world experience, 
+          Join Nexus Technologies's elite internship program. Get real-world experience, 
           professional certificates, and a verified offer letter to jumpstart your journey.
         </motion.p>
         

@@ -36,7 +36,7 @@ const generateOfferLetter = (userData) => {
             
             doc.moveDown(1);
             doc.font('Helvetica').text(
-                `We are thrilled to offer you the position of Intern in the ${userData.domain} domain at CodSoft. ` +
+                `We are thrilled to offer you the position of Intern in the ${userData.domain} domain at Nexus Technologies. ` +
                 `We were highly impressed with your background from ${userData.university} and believe that your skills ` +
                 `align perfectly with our goals.`
             );
@@ -55,7 +55,7 @@ const generateOfferLetter = (userData) => {
             
             doc.moveDown(2);
             doc.font('Helvetica-Bold').text('Sincerely,');
-            doc.text('CodSoft Team');
+            doc.text('Nexus Technologies Team');
 
             doc.end();
 
@@ -121,7 +121,7 @@ const generateCertificate = (userData) => {
                .fontSize(12)
                .text(`Date of Issue: ${new Date().toLocaleDateString()}`, 100, 480);
                
-            doc.text('CodSoft Director', 600, 480);
+            doc.text('Nexus Technologies Director', 600, 480);
 
             doc.end();
 

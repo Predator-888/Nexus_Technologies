@@ -25,7 +25,7 @@ const razorpay = new Razorpay({
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'CodSoft API is running' });
+    res.json({ status: 'ok', message: 'Nexus Technologies API is running' });
 });
 
 // 1. Create Order Endpoint

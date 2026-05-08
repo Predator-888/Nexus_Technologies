@@ -31,7 +31,7 @@ export default function Home() {
     <main className="min-h-screen bg-black text-white flex flex-col items-center">
       {/* Navbar Placeholder */}
       <nav className="w-full p-6 flex justify-between items-center glass-panel fixed top-0 z-50">
-        <div className="text-2xl font-bold text-gradient tracking-wider">CODSOFT</div>
+        <div className="text-2xl font-bold text-gradient tracking-wider">NEXUS TECHNOLOGIES</div>
         <div className="flex gap-6 text-sm text-gray-300">
           <a href="#hero" className="hover:text-white transition">Home</a>
           <a href="#domains" className="hover:text-white transition">Domains</a>
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
             <h2 className="text-3xl font-bold mb-4 text-green-400">Payment Successful!</h2>
             <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-              Welcome to CodSoft! Your documents have been generated. You can download them below.
+              Welcome to Nexus Technologies! Your documents have been generated. You can download them below.
               (Note: The actual email feature is disabled for this prototype).
             </p>
             <div className="flex justify-center gap-6">
