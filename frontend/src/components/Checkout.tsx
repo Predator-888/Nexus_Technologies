@@ -11,6 +11,7 @@ interface Props {
 
 export default function Checkout({ amount, userData, onSuccess }: Props) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
 
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -37,7 +38,8 @@ export default function Checkout({ amount, userData, onSuccess }: Props) {
       // 1. Create order on our backend
       const orderRes = await fetch("http://localhost:5000/api/payment/create-order", {
         method: "POST",
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userData })
       });
       const orderData = await orderRes.json();
 
@@ -56,6 +58,7 @@ export default function Checkout({ amount, userData, onSuccess }: Props) {
         description: "Internship Registration Fee",
         order_id: orderData.orderId,
         handler: async function (response: any) {
+          setIsVerifying(true);
           // 3. Verify Payment
           const verifyRes = await fetch("http://localhost:5000/api/payment/verify", {
             method: "POST",
@@ -69,6 +72,7 @@ export default function Checkout({ amount, userData, onSuccess }: Props) {
           });
           
           const verifyData = await verifyRes.json();
+          setIsVerifying(false);
           if (verifyData.success) {
             onSuccess({ offer: verifyData.offerLetterUrl, cert: verifyData.certificateUrl });
           } else {
@@ -129,18 +133,26 @@ export default function Checkout({ amount, userData, onSuccess }: Props) {
 
       <button 
         onClick={handlePayment}
-        disabled={isProcessing}
+        disabled={isProcessing || isVerifying}
         className={`w-full py-4 rounded-lg font-bold text-lg transition flex items-center justify-center gap-3 ${
-          isProcessing ? "bg-gray-700 text-gray-400 cursor-not-allowed" : "bg-[#3399cc] hover:bg-[#2b88b8] text-white button-glow"
+          (isProcessing || isVerifying) ? "bg-gray-700 text-gray-400 cursor-not-allowed" : "bg-[#3399cc] hover:bg-[#2b88b8] text-white button-glow"
         }`}
       >
-        {isProcessing ? (
+        {isVerifying ? (
           <>
             <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            Processing...
+            Generating Documents...
+          </>
+        ) : isProcessing ? (
+          <>
+            <svg className="animate-spin h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Initializing...
           </>
         ) : (
           <>
